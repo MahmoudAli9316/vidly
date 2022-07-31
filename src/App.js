@@ -1,9 +1,10 @@
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import "./App.css";
 import Movies from "./components/movies";
 import NavBar from "./components/navBar";
-import Features from "./components/features";
-import Pricing from "./components/pricing";
+import Customers from "./components/customers";
+import Rental from "./components/rental";
+import NotFound from "./components/notFound";
 
 function App() {
   return (
@@ -11,9 +12,12 @@ function App() {
       <NavBar />
       <main className="container">
         <Switch>
-          <Route path="/Features" component={Features} />
-          <Route path="/Pricing" render={props => <Pricing addProps=" List" {...props} />} />
-          <Route path="/" exact component={Movies} />
+          <Route path="/Customers" component={Customers} />
+          <Route path="/Rental" component={Rental} />
+          <Route path="/not-Found" component={NotFound} />
+          <Route path="/Movies" exact component={Movies} />
+          <Redirect to="/not-Found" />
+          <Redirect from="/" to="/Movies" />
         </Switch>
       </main>
     </div>
