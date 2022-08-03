@@ -8,7 +8,7 @@ import MovieDetails from "./components/movieDetails";
 import "./App.css";
 import React from "react";
 import LoginForm from "./components/loginFom";
-
+import RegisterForm from "./components/registerForm";
 function App() {
   return (
     <React.Fragment>
@@ -16,6 +16,7 @@ function App() {
       <main className="container">
         <Switch>
           <Route path="/login" component={LoginForm} />
+          <Route path="/register" component={RegisterForm} />
           <Route path="/movie/:_id" component={MovieDetails} />
           <Route path="/movies" component={Movies} />
           <Route path="/customers" component={Customers} />
