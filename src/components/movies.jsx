@@ -19,39 +19,33 @@ class Movies extends Component {
     const genres = [{ name: "All Genres", _id: "" }, ...getGenres()];
     this.setState({ movies: getMovies(), genres });
   }
-  handleDelete = (movie) => {
-    const movies = this.state.movies.filter((m) => m._id !== movie._id);
+  handleDelete = movie => {
+    const movies = this.state.movies.filter(m => m._id !== movie._id);
     this.setState({ movies });
   };
-  handleLike = (movie) => {
+  handleLike = movie => {
     const movies = [...this.state.movies];
     const index = movies.indexOf(movie);
     movies[index] = { ...movies[index] };
     movies[index].like = !movies[index].like;
     this.setState({ movies });
   };
-  handlePageChange = (page) => {
+  handlePageChange = page => {
     this.setState({ currentPage: page });
   };
-  handleGenreSelect = (genre) => {
+  handleGenreSelect = genre => {
     this.setState({ selectedGenre: genre, currentPage: 1 });
   };
-  handleSort = (sortColumn) => {
+  handleSort = sortColumn => {
     this.setState({ sortColumn });
   };
 
   getPagedMovies = () => {
-    const {
-      pageSize,
-      currentPage,
-      selectedGenre,
-      sortColumn,
-      movies: allMovies,
-    } = this.state;
+    const { pageSize, currentPage, selectedGenre, sortColumn, movies: allMovies } = this.state;
 
     const filtered =
       selectedGenre && selectedGenre._id
-        ? allMovies.filter((movie) => movie.genre._id === selectedGenre._id)
+        ? allMovies.filter(movie => movie.genre._id === selectedGenre._id)
         : allMovies;
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
@@ -59,6 +53,9 @@ class Movies extends Component {
     const movies = paginate(sorted, currentPage, pageSize);
 
     return { totalCount: filtered.length, data: movies };
+  };
+  handleNewMovie = () => {
+    this.props.history.push("/movies/new");
   };
   render() {
     const { length: count } = this.state.movies;
@@ -75,6 +72,9 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
+          <button onClick={this.handleNewMovie} className="btn btn-primary">
+            New Movie
+          </button>
           <p>Showing {totalCount} movies in the database.</p>
           <MoviesTable
             movies={movies}

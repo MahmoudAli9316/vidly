@@ -1,6 +1,8 @@
 import { Component } from "react";
 import Joi from "joi-browser";
 import Input from "../common/input";
+import Select from "./select";
+import RangeInput from "./rangeInput";
 
 class Form extends Component {
   state = {
@@ -46,10 +48,13 @@ class Form extends Component {
     data[input.name] = input.value;
     this.setState({ data, errors });
   };
-
+  setButtonStyle = disabled => {
+    return disabled ? { cursor: "not-allowed" } : { cursor: "default" };
+  };
   renderButton = label => {
+    const disabled = this.validate() !== null;
     return (
-      <button disabled={this.validate()} className="btn btn-primary">
+      <button style={this.setButtonStyle(disabled)} disabled={disabled} className="btn btn-primary">
         {label}
       </button>
     );
@@ -68,6 +73,18 @@ class Form extends Component {
         error={errors[name]}
       />
     );
+  };
+
+  renderSelect = (name, label, options) => {
+    const { data, errors } = this.state;
+    return (
+      <Select name={name} options={options} value={data[name]} label={label} error={errors[name]} />
+    );
+  };
+
+  renderRange = (name, label, min, max, step) => {
+    if (max < min) throw new Error("max can't be less than min.");
+    return <RangeInput name={name} label={label} min={min} max={max} step={step} />;
   };
 }
 
