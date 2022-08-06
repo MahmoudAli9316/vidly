@@ -4,7 +4,7 @@ import NavBar from "./components/navBar";
 import Customers from "./components/customers";
 import Rental from "./components/rental";
 import NotFound from "./components/notFound";
-import MovieDetails from "./components/movieDetails";
+import MovieForm from "./components/movieForm";
 import "./App.css";
 import React from "react";
 import LoginForm from "./components/loginFom";
@@ -17,8 +17,7 @@ function App() {
         <Switch>
           <Route path="/login" component={LoginForm} />
           <Route path="/register" component={RegisterForm} />
-          <Route path="/movies/new" component={MovieDetails} />
-          <Route path="/movies/:_id" component={MovieDetails} />
+          <Route path="/movies/:id" render={props => <MovieForm {...props} />} />
           <Route path="/movies" component={Movies} />
           <Route path="/customers" component={Customers} />
           <Route path="/rental" component={Rental} />

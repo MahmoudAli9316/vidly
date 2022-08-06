@@ -49,7 +49,7 @@ class Form extends Component {
     this.setState({ data, errors });
   };
   setButtonStyle = disabled => {
-    return disabled ? { cursor: "not-allowed" } : { cursor: "default" };
+    return disabled ? { cursor: "not-allowed" } : { cursor: "pointer" };
   };
   renderButton = label => {
     const disabled = this.validate() !== null;
@@ -78,7 +78,14 @@ class Form extends Component {
   renderSelect = (name, label, options) => {
     const { data, errors } = this.state;
     return (
-      <Select name={name} options={options} value={data[name]} label={label} error={errors[name]} />
+      <Select
+        onChange={this.handleChange}
+        name={name}
+        options={options}
+        value={data[name]}
+        label={label}
+        error={errors[name]}
+      />
     );
   };
 
